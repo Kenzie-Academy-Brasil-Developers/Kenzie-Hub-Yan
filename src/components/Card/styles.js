@@ -6,17 +6,18 @@ const CardStyled = styled.li`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 1.375rem;
+    padding: 1rem;
     border-radius: 4px;
 
     & > div {
         display: flex;
         align-items: center;
         gap: 1.5625rem;
+    }
 
-        > svg {
-            color: var(--grey-0);
-        }
+    &:hover {
+        cursor: pointer;
+        background-color: var(--grey-2);
     }
 `
 

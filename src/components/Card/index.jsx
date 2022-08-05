@@ -1,6 +1,5 @@
-import { Title3, Headline } from '../Typography'
+import { Title3, Headline } from '../Typography/styles'
 import CardStyle from './styles'
-import { CgTrash } from 'react-icons/cg'
 
 export default function Card({ technology, level }) {
     return(
@@ -8,7 +7,6 @@ export default function Card({ technology, level }) {
             <Title3>{technology}</Title3>
             <div>
                 <Headline color='grey'>{level}</Headline>
-                <CgTrash />
             </div>
         </CardStyle>
     )

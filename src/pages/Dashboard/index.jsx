@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { SmallButton } from "../../components/Buttons/styles";
 import { Headline, Title1, Title2 } from "../../components/Typography/styles";
 import { Container, Wrapper } from "./styles";
+import { IconButton } from "../../components/Buttons/styles";
+import { BsPlusLg } from 'react-icons/bs'
+import Card from '../../components/Card'
 
 export default function Dashboard() {
     const [userName, setUserName] = useState('Visitante')
@@ -18,7 +21,7 @@ export default function Dashboard() {
     }, [userName, userModule])
 
     const navigate = useNavigate()
-
+    
     const handleLogout = () => {
         localStorage.clear()
         
@@ -35,15 +38,24 @@ export default function Dashboard() {
             </header>
 
             <section>
-                <div>
+                <Wrapper>
                     <Title1>Olá, {userName}</Title1>
                     <Headline color="grey">{userModule}</Headline>
-                </div>
+                </Wrapper>
             </section>
 
 
             <main>
-                <Title2></Title2>
+                <Wrapper>
+                    <div>
+                        <Title2>Tecnologias</Title2>
+                        <IconButton><BsPlusLg /></IconButton>
+                    </div>
+
+                    <ul>
+                        <Card technology='ReactJS' level='Intermediário'/>
+                    </ul>
+                </Wrapper>
             </main>
         </Container>
     )
