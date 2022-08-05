@@ -44,6 +44,12 @@ export const Container = styled.div`
         margin-top: .625rem;
         padding: 1.375rem 1.125rem;
     }
+
+    .no-item {
+        text-align: center;
+        font-size: 1.5rem;
+        color: var(--grey-0);
+    }
 `
 
 export const Wrapper = styled.div`
