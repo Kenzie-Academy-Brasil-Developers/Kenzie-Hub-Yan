@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { loginSchema } from "../../validators/userSchema"
 import api from '../../services/api'
 import { useNavigate } from "react-router-dom"
+import { errorToast, successToast } from '../../components/Toast/toast'
 
 
 export default function Login() {
@@ -19,12 +20,14 @@ export default function Login() {
     const handleLogin = (data) => {
         api.post('sessions', data)
         .then(response => {
+            successToast('Login realizado!')
+
             localStorage.clear()
 
             localStorage.setItem('@kenzie-hub:user', JSON.stringify(response.data.user))
             localStorage.setItem('@kenzie-hub:token', JSON.stringify(response.data.token))
-            navigate('/homepage', {replace: true})
-        }).catch((error) => console.log(error))
+            navigate('/dashboard', {replace: true})
+        }).catch((error) => errorToast('Usuário não encontrado!'))
     }
 
     return(

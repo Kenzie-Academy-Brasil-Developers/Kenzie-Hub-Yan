@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '../../validators/userSchema'
 import api from '../../services/api'
+import { successToast, errorToast } from '../../components/Toast/toast'
 
 export default function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -21,8 +22,11 @@ export default function Register() {
         delete data.confirmPassword
         
         api.post('users', data)
-        .then(() => navigate('/', {replace: true}))
-        .catch(error => console.log(error))
+        .then(() => {
+            successToast('Usuário cadastrado!')
+            navigate('/', {replace: true})
+        })
+        .catch(error => errorToast('Ocorreu um erro!'))
     }
 
     return(
