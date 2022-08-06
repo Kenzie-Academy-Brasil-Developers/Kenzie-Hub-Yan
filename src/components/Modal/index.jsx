@@ -1,4 +1,4 @@
-import { Container, Wrapper, Header, Main, Form } from "./styles"
+import { Container, Wrapper, Header, Main } from "./styles"
 import { Title3 } from "../Typography/styles"
 import { MdOutlineClose } from 'react-icons/md'
 import { useEffect, useRef } from "react"
@@ -29,7 +29,7 @@ export default function Modal({ title, children, setModalState }) {
                 </Header>
                 
                 <Main>
-                    <Form>{children}</Form>
+                    {children}
                 </Main>
             </Wrapper>
         </Container>

@@ -6,6 +6,7 @@ export const Select = styled.select`
     border: none;
     border-radius: 4px;
     padding: .75rem 1rem;
+    cursor: pointer;
 
     &::placeholder {
         font-size: 1rem;

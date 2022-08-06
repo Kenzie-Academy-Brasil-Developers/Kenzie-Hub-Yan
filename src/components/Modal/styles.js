@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
     max-width: 369px;
     background-color: var(--grey-3);
     border-radius: 4px;
+    overflow: hidden;
 `
 
 export const Header = styled.header`
@@ -33,10 +34,4 @@ export const Header = styled.header`
 
 export const Main = styled.main`
     padding: 1.375rem 1.375rem 2rem 1.375rem;
-`
-
-export const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
 `
