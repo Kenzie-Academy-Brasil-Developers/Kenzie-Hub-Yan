@@ -8,26 +8,18 @@ import Select from '../../components/Select/styles'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '../../validators/userSchema'
-import api from '../../services/api'
-import { successToast, errorToast } from '../../components/Toast/toast'
+import { useContext } from 'react'
+import { UserContext } from '../../contexts/UserContext'
+import Loading from '../../components/Loading'
 
 export default function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(registerSchema)
     })
 
-    const navigate = useNavigate()
+    const { handleRegister, isWaiting } = useContext(UserContext)
 
-    const handleRegister = data => {
-        delete data.confirmPassword
-        
-        api.post('users', data)
-        .then(() => {
-            successToast('Usuário cadastrado!')
-            navigate('/', {replace: true})
-        })
-        .catch(error => errorToast('Ocorreu um erro!'))
-    }
+    const navigate = useNavigate()
 
     return(
         <RegisterStyled>
@@ -44,7 +36,7 @@ export default function Register() {
 
                     <Form onSubmit={handleSubmit(handleRegister)}>
                         <Label>Nome 
-                            <Input placeholder="Digite aqui seu nome" {...register('name')}/>
+                            <Input placeholder="Digite aqui seu nome" autoComplete='username' {...register('name')}/>
                             {
                                 errors.name &&
                                 <p className='error'>{errors.name?.message}</p>
@@ -52,7 +44,7 @@ export default function Register() {
                         </Label>
                         
                         <Label>Email 
-                            <Input placeholder="Digite aqui seu email" {...register('email')}/>
+                            <Input placeholder="Digite aqui seu email" autoComplete='email' {...register('email')}/>
                             {
                                 errors.email &&
                                 <p className='error'>{errors.email?.message}</p>
@@ -60,7 +52,7 @@ export default function Register() {
                         </Label>
 
                         <Label>Senha 
-                            <Input type='password' placeholder="Digite aqui sua senha" {...register('password')}/>
+                            <Input type='password' placeholder="Digite aqui sua senha" autoComplete='new-password' {...register('password')}/>
                             {
                                 errors.password &&
                                 <p className='error'>{errors.password?.message}</p>
@@ -68,7 +60,7 @@ export default function Register() {
                         </Label>
 
                         <Label>Confirmar Senha 
-                            <Input type='password' placeholder="Digite novamente sua senha" {...register('confirmPassword')}/>
+                            <Input type='password' placeholder="Digite novamente sua senha" autoComplete='new-password' {...register('confirmPassword')}/>
                             {
                                 errors.confirmPassword &&
                                 <p className='error'>{errors.confirmPassword?.message}</p>
@@ -108,6 +100,10 @@ export default function Register() {
                         <Button type='submit' status='negative'>Cadastrar</Button>
                     </Form>
                 </Wrapper>
+                {
+                    isWaiting && 
+                    <Loading/>
+                }
             </Container>
         </RegisterStyled>
     )
