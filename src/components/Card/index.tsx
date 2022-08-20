@@ -1,7 +1,13 @@
 import { Title3, Headline } from '../Typography/styles'
 import CardStyle from './styles'
 
-export default function Card({ technology, level, onClick }) {
+interface CardProps {
+    technology: string,
+    level: string,
+    onClick: () => void
+}
+
+export default function Card({ technology, level, onClick }: CardProps): JSX.Element {
     return(
         <CardStyle onClick={onClick}>
             <Title3>{technology}</Title3>

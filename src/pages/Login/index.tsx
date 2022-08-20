@@ -9,13 +9,14 @@ import { loginSchema } from "../../validators/userSchema"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../contexts/UserContext"
 import { useContext } from "react"
+import { IUserLoginData } from "../../services/postLogin"
 
 export default function Login() {
     const { handleLogin, isWaiting } = useContext(UserContext)
 
     const navigate = useNavigate()
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm<IUserLoginData>({
         resolver: yupResolver(loginSchema)
     })
 

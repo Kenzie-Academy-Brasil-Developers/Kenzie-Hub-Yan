@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const colorPicker = (color) => color === 'pink' ? 'color: var(--color-primary);' : color === 'grey' ? 'color: var(--grey-1);' : 'color: var(--grey-0);'
+const colorPicker = (color?: string) => color === 'pink' ? 'color: var(--color-primary);' : color === 'grey' ? 'color: var(--grey-1);' : 'color: var(--grey-0);'
 
 export const Title1 = styled.h1`
     font-size: 1.125rem;

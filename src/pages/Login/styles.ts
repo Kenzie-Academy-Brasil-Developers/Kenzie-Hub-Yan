@@ -11,17 +11,15 @@ export const Container = styled.section`
     min-height: 100vh;
     padding: 1.875rem 0rem;
 
-    .animation {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 2.1875rem;
-        align-items: center;
-        width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.1875rem;
+    align-items: center;
+    width: 100%;
 
-        & > h1 {
-            font-size: 28px;
-        }
+    & > h1 {
+        font-size: 28px;
     }
 `
 

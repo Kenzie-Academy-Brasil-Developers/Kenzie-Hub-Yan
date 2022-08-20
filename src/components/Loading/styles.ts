@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { loadingProps } from ".";
 
 const loaderAnimation = keyframes`
     from {
@@ -10,7 +11,7 @@ const loaderAnimation = keyframes`
     }
 `
 
-export const Container = styled.div`
+export const Container = styled.div<loadingProps>`
     display: flex;
     justify-content: center;
     align-items: center;

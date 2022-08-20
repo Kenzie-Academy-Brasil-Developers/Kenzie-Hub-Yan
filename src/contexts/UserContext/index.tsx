@@ -1,39 +1,57 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { successToast, errorToast } from '../../components/Toast/toast'
 import api from "../../services/api";
+import getProfile from "../../services/getProfile";
+import postLogin, { IUserLoginData } from "../../services/postLogin";
+import postRegister, { IRegisterData } from "../../services/postRegister";
+import { IAPIData } from './../../services/getProfile';
 
-export const UserContext = createContext({})
+export const UserContext = createContext<IUserContextData>({} as IUserContextData)
 
-export default function UserProvider({ children }) {
-    const [user, setUser] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [isWaiting, setIsWaiting] = useState(false)
+interface IUserContextData {
+    user: IAPIData,
+    handleLogin: (data: IUserLoginData) => void,
+    handleLogout: () => void,
+    handleRegister: (data: IRegisterData) => void,
+    isLoading: boolean,
+    isWaiting: boolean,
+    setIsWaiting: (state: boolean) => void
+}
+
+interface IUserProvider {
+    children: ReactNode
+}
+
+export default function UserProvider({ children }: IUserProvider): JSX.Element {
+    const [user, setUser] = useState<IAPIData>({} as IAPIData)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isWaiting, setIsWaiting] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
-    const handleRegister = data => {
+    const handleRegister = (data: IRegisterData) => {
         delete data.confirmPassword
         setIsWaiting(true)
 
-        api.post('users', data)
+        postRegister(data)
         .then(() => {
             successToast('Usuário cadastrado!')
             navigate('/', {replace: true})
         })
-        .catch(error => errorToast('Ocorreu um erro!'))
+        .catch(() => errorToast('Ocorreu um erro!'))
         .finally(() => setIsWaiting(false))
     }
 
-    const handleLogin = async (data) => {
+    const handleLogin = async (data: IUserLoginData) => {
         setIsWaiting(true)
 
-        api.post('sessions', data)
+        postLogin(data)
         .then((response) => {
             successToast('Login realizado!')
             setUser(response.data.user)
             localStorage.setItem('@kenzie-hub:token', response.data.token)
-            api.defaults.headers.authorization = `Bearer ${response.data.token}`
+            api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
             navigate('/dashboard', {replace: true})
         })
         .catch(() => errorToast('Usuário não encontrado!'))
@@ -48,9 +66,9 @@ export default function UserProvider({ children }) {
     useEffect(() => {
         const token = localStorage.getItem('@kenzie-hub:token')
 
-        api.defaults.headers.authorization = `Bearer ${token}`
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-        api.get('profile')
+        getProfile()
         .then((response) => {
             setUser(response.data)
         })

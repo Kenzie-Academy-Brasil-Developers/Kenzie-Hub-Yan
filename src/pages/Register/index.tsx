@@ -11,9 +11,10 @@ import { registerSchema } from '../../validators/userSchema'
 import { useContext } from 'react'
 import { UserContext } from '../../contexts/UserContext'
 import Loading from '../../components/Loading'
+import { IRegisterData } from '../../services/postRegister'
 
 export default function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegisterData>({
         resolver: yupResolver(registerSchema)
     })
 
