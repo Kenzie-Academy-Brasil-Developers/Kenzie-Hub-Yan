@@ -43,7 +43,7 @@ export default function UserProvider({ children }: IUserProvider): JSX.Element {
         .finally(() => setIsWaiting(false))
     }
 
-    const handleLogin = async (data: IUserLoginData) => {
+    const handleLogin = (data: IUserLoginData) => {
         setIsWaiting(true)
 
         postLogin(data)
@@ -68,12 +68,14 @@ export default function UserProvider({ children }: IUserProvider): JSX.Element {
 
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-        getProfile()
-        .then((response) => {
-            setUser(response.data)
-        })
-        .catch((error) => console.log(error))
-        .finally(() => setIsLoading(false))
+        if(token) {
+            getProfile()
+            .then((response) => {
+                setUser(response.data)
+            })
+            .catch((error) => console.log(error))
+            .finally(() => setIsLoading(false))
+        }
     }, [])
     
     return(
